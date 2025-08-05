@@ -5,8 +5,11 @@ The finished content of this app is a tool pilots can use to learn density altit
 
 # Architecture
 The app will be tab bar based navigation.
-Onw tab will be the tool to show airports and the airport centric data
+
+One tab will be the tool to show airports and the airport centric data
+
 One tab will present the flight data
+
 One tab will be utilities
 
 Other tabs will be added as needed.
