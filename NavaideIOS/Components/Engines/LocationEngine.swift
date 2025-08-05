@@ -24,6 +24,7 @@ class LocationEngine: NSObject, ObservableObject {
     @Published var heading: Double = 0.0
     @Published var directionOfTravel: Double = 0.0
     @Published var windDrift: Double = 0.0
+    @Published var verticalVelocity: Double = 0.0
     
     @Published var isTracking: Bool = false
     @Published var isEnabled: Bool {
@@ -135,9 +136,16 @@ extension LocationEngine: CLLocationManagerDelegate {
         /// Natively measured in meters per second, convert to kph (speed * 60 * 60)/1000
         groundSpeed = lastLocation.speed * 3.6
         
-        directionOfTravel = lastLocation.course
+        heading = lastLocation.course
         latitude = lastLocation.coordinate.latitude
         longitude = lastLocation.coordinate.longitude
+        if let currentLocation {
+            directionOfTravel = calculateCourse(from: lastLocation.coordinate, to: currentLocation.coordinate)
+            verticalVelocity = computeVerticalVelocity(from: lastLocation.coordinate, to: currentLocation.coordinate)
+        } else {
+            directionOfTravel = 0.0
+            verticalVelocity = 0.0
+        }
     }
 }
 
@@ -178,4 +186,9 @@ fileprivate extension LocationEngine {
         return heading
     }
 
+    func computeVerticalVelocity(from start: CLLocationCoordinate2D, to current: CLLocationCoordinate2D) -> Double {
+        // For now.
+        // Take delta altitude divide that by time and compute to value/minute
+        return 0.0
+    }
 }

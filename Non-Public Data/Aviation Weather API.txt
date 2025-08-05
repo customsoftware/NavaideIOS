@@ -1,0 +1,188 @@
+Aviation Weather API
+
+By Airport code
+
+https://aviationweather.gov/api/data/airport?ids=<<airportString>>&format=json
+
+By Geobox
+
+https://aviationweather.gov/api/data/airport?bbox=<<geoString>>&format=json
+
+Use example:
+
+-- By Code
+https://aviationweather.gov/api/data/airport?ids=KPVU&format=json
+
+-- By GeoBox - Grip points must go from the southwest corner to the northeast corner. Airports have ICAOID filled in. Helipads do not.
+https://aviationweather.gov/api/data/airport?bbox=40.1,-111.8,40.3,-111&format=json
+
+/api/data/airport?bbox=40,-90,45,-85&format=json
+
+Return by ID:
+[{"id":"17723","icaoId":"KPVU","iataId":"PVU","faaId":"PVU","name":"PROVO\/PROVO MUNI ","state":"UT","country":"US","source":"FAA","type":"ARP","lat":40.2192,"lon":-111.723,"elev":1371,"magdec":"12E","owner":"P","runways":[{"id":"13\/31","dimension":"8603x150","surface":"A","alignment":"146"},{"id":"18\/36","dimension":"6628x150","surface":"A","alignment":"192"}],"rwyNum":"2","rwyLength":"L","rwyType":"A","services":"S","tower":"T","beacon":"B","operations":"0","passengers":"420","freqs":"LCL\/P,125.3;ATIS,135.175","priority":"3"}]
+
+Beautified:
+
+[
+  {
+    "id": "17723",
+    "icaoId": "KPVU",
+    "iataId": "PVU",
+    "faaId": "PVU",
+    "name": "PROVO/PROVO MUNI ",
+    "state": "UT",
+    "country": "US",
+    "source": "FAA",
+    "type": "ARP",
+    "lat": 40.2192,
+    "lon": -111.723,
+    "elev": 1371,
+    "magdec": "12E",
+    "owner": "P",
+    "runways": [
+      {
+        "id": "13/31",
+        "dimension": "8603x150",
+        "surface": "A",
+        "alignment": "146"
+      },
+      {
+        "id": "18/36",
+        "dimension": "6628x150",
+        "surface": "A",
+        "alignment": "192"
+      }
+    ],
+    "rwyNum": "2",
+    "rwyLength": "L",
+    "rwyType": "A",
+    "services": "S",
+    "tower": "T",
+    "beacon": "B",
+    "operations": "0",
+    "passengers": "420",
+    "freqs": "LCL/P,125.3;ATIS,135.175",
+    "priority": "3"
+  }
+]
+
+Return by GeoBox:
+[{"id":"17723","icaoId":"KPVU","iataId":"PVU","faaId":"PVU","name":"PROVO\/PROVO MUNI ","state":"UT","country":"US","source":"FAA","type":"ARP","lat":40.2192,"lon":-111.723,"elev":1371,"magdec":"12E","owner":"P","runways":[{"id":"13\/31","dimension":"8603x150","surface":"A","alignment":"146"},{"id":"18\/36","dimension":"6628x150","surface":"A","alignment":"192"}],"rwyNum":"2","rwyLength":"L","rwyType":"A","services":"S","tower":"T","beacon":"B","operations":"0","passengers":"420","freqs":"LCL\/P,125.3;ATIS,135.175","priority":"3"},{"id":"17751","icaoId":"KSPK","iataId":"-","faaId":"SPK","name":"SPANISH FORK\/SPANISH FORK MUNI\/WOODHOUSE FLD ","state":"UT","country":"US","source":"FAA","type":"ARP","lat":40.145,"lon":-111.668,"elev":1381,"magdec":"11E","owner":"P","runways":[{"id":"12\/30","dimension":"6500x100","surface":"A","alignment":"132"}],"rwyNum":"1","rwyLength":"M","rwyType":"A","services":"S","tower":null,"beacon":"B","operations":"0","passengers":null,"freqs":"-","priority":"6"},{"id":"17724","icaoId":null,"iataId":null,"faaId":"UT51","name":"PROVO\/UTAH VALLEY RGNL MEDICAL CENTER ","state":"UT","country":"US","source":"FAA","type":"HEL","lat":40.2464,"lon":-111.666,"elev":1388,"magdec":"11E","owner":"R","runways":[{"id":"H1","dimension":"40x40","surface":"C","alignment":"-"},{"id":"H2","dimension":"40x40","surface":"C","alignment":"-"}],"rwyNum":"2","rwyLength":"S","rwyType":"C","services":null,"tower":null,"beacon":null,"operations":"0","passengers":null,"freqs":"-","priority":"9"}]
+
+Beautified:
+[
+  {
+    "id": "17723",
+    "icaoId": "KPVU",
+    "iataId": "PVU",
+    "faaId": "PVU",
+    "name": "PROVO/PROVO MUNI ",
+    "state": "UT",
+    "country": "US",
+    "source": "FAA",
+    "type": "ARP",
+    "lat": 40.2192,
+    "lon": -111.723,
+    "elev": 1371,
+    "magdec": "12E",
+    "owner": "P",
+    "runways": [
+      {
+        "id": "13/31",
+        "dimension": "8603x150",
+        "surface": "A",
+        "alignment": "146"
+      },
+      {
+        "id": "18/36",
+        "dimension": "6628x150",
+        "surface": "A",
+        "alignment": "192"
+      }
+    ],
+    "rwyNum": "2",
+    "rwyLength": "L",
+    "rwyType": "A",
+    "services": "S",
+    "tower": "T",
+    "beacon": "B",
+    "operations": "0",
+    "passengers": "420",
+    "freqs": "LCL/P,125.3;ATIS,135.175",
+    "priority": "3"
+  },
+  {
+    "id": "17751",
+    "icaoId": "KSPK",
+    "iataId": "-",
+    "faaId": "SPK",
+    "name": "SPANISH FORK/SPANISH FORK MUNI/WOODHOUSE FLD ",
+    "state": "UT",
+    "country": "US",
+    "source": "FAA",
+    "type": "ARP",
+    "lat": 40.145,
+    "lon": -111.668,
+    "elev": 1381,
+    "magdec": "11E",
+    "owner": "P",
+    "runways": [
+      {
+        "id": "12/30",
+        "dimension": "6500x100",
+        "surface": "A",
+        "alignment": "132"
+      }
+    ],
+    "rwyNum": "1",
+    "rwyLength": "M",
+    "rwyType": "A",
+    "services": "S",
+    "tower": null,
+    "beacon": "B",
+    "operations": "0",
+    "passengers": null,
+    "freqs": "-",
+    "priority": "6"
+  },
+  {
+    "id": "17724",
+    "icaoId": null,
+    "iataId": null,
+    "faaId": "UT51",
+    "name": "PROVO/UTAH VALLEY RGNL MEDICAL CENTER ",
+    "state": "UT",
+    "country": "US",
+    "source": "FAA",
+    "type": "HEL",
+    "lat": 40.2464,
+    "lon": -111.666,
+    "elev": 1388,
+    "magdec": "11E",
+    "owner": "R",
+    "runways": [
+      {
+        "id": "H1",
+        "dimension": "40x40",
+        "surface": "C",
+        "alignment": "-"
+      },
+      {
+        "id": "H2",
+        "dimension": "40x40",
+        "surface": "C",
+        "alignment": "-"
+      }
+    ],
+    "rwyNum": "2",
+    "rwyLength": "S",
+    "rwyType": "C",
+    "services": null,
+    "tower": null,
+    "beacon": null,
+    "operations": "0",
+    "passengers": null,
+    "freqs": "-",
+    "priority": "9"
+  }
+]
