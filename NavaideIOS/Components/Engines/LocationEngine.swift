@@ -88,11 +88,6 @@ class LocationEngine: NSObject, ObservableObject {
     }
     
     private func computeDrift() {
-        guard let lastLocation,
-                let currentLocation else {
-            windDrift = 0
-            return }
-        
         // Measure the azimuth between the two locations.
         windDrift = computeWindDrift()
         
@@ -141,7 +136,7 @@ extension LocationEngine: CLLocationManagerDelegate {
         longitude = lastLocation.coordinate.longitude
         if let currentLocation {
             directionOfTravel = calculateCourse(from: lastLocation.coordinate, to: currentLocation.coordinate)
-            verticalVelocity = computeVerticalVelocity(from: lastLocation.coordinate, to: currentLocation.coordinate)
+            verticalVelocity = computeVerticalVelocity(from: lastLocation, to: currentLocation)
         } else {
             directionOfTravel = 0.0
             verticalVelocity = 0.0
@@ -166,11 +161,22 @@ fileprivate extension LocationEngine {
         let speed = groundSpeed
         
         // Compute the vertical component of the triangle, that's the crosswind speed
+        let windSpeed = computeWindSpeed(heading: course, distance: speed)
         
         // Compute delta heading
         let deltaTime = current.timestamp.timeIntervalSince(last.timestamp)
         
+        retValue = windSpeed / deltaTime
+        
         return retValue
+    }
+    
+    func computeWindSpeed(heading: Double, distance: Double) -> Double {
+        // Convert angles from degrees to radians for trigonometric functions
+        let deltaAngle_radians = heading * .pi / 180.0
+
+        // Apply the Law of Sines to find side B
+        return distance * sin(deltaAngle_radians)
     }
     
     func calculateCourse(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D) -> Double {
@@ -186,9 +192,18 @@ fileprivate extension LocationEngine {
         return heading
     }
 
-    func computeVerticalVelocity(from start: CLLocationCoordinate2D, to current: CLLocationCoordinate2D) -> Double {
+    func computeVerticalVelocity(from start: CLLocation, to current: CLLocation) -> Double {
         // For now.
+        // Compute delta heading
+        let deltaTime = start.timestamp.timeIntervalSince(current.timestamp)
+        
         // Take delta altitude divide that by time and compute to value/minute
-        return 0.0
+        let deltaAltitude = start.altitude - current.altitude
+        
+        guard deltaTime > 0 , abs(deltaAltitude) > 0 else {
+            return 0.0
+        }
+        // Time is in seconds, Altitude is in meters, so this is meters/second
+        return deltaAltitude / deltaTime
     }
 }

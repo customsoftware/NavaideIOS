@@ -76,8 +76,8 @@ enum VelocityUnit: CaseIterable, Identifiable {
     }
     
     /// This converst miles per hour to meters per second, miles per hour to nautical miles per hour, and back
-    func convert(source: Double, from: VelocityUnit, to target: VelocityUnit) -> Double {
-        let retValue: Double
+    func convert(source: Double, from: VelocityUnit, to target: VelocityUnit, precision: precisionUnit = .hours) -> Double {
+        var retValue: Double
         switch (from, target) {
         case (.metric, .imperial):
             retValue = source * 0.621371
@@ -95,8 +95,27 @@ enum VelocityUnit: CaseIterable, Identifiable {
             retValue = source
         }
         
+        if precision == .minutes {
+            switch target {
+            case .metric:
+                // 1 kilometer/hour = 1000 meters/hour or 1000 / 60 meters per minute
+                retValue = (retValue * 1000)/60
+            case .imperial:
+                // 1 nautical mile/hour = 5280 feet / hour or 5280 / 60 feet per minute
+                retValue = (retValue * 5280)/60
+            case .nautical:
+                // 1 nautical mile/hour = 5280 feet / hour or 5280 / 60 feet per minute
+                retValue = (retValue * 6076.12)/60
+            }
+        } /// Else do nothing
+        
         return round(retValue * 10)/10
     }
+}
+
+enum precisionUnit: String, CaseIterable {
+    case minutes
+    case hours
 }
 
 enum DistanceUnit: CaseIterable, Identifiable {

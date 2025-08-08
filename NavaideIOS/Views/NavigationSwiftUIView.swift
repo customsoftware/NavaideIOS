@@ -84,9 +84,9 @@ struct NavigationSwiftUIView: View {
             
             NavigatorRowSwiftUIView(rowLabel: "Speed:", rowValue: velocityOptions.convert(source:locator.groundSpeed, from: .metric, to: velocityOptions).velocityString)
             
-//            NavigatorRowSwiftUIView(rowLabel: "Latitude:", rowValue: locator.latitude.mapString)
-//            
-//            NavigatorRowSwiftUIView(rowLabel: "Longitude:", rowValue: locator.longitude.mapString)
+            NavigatorRowSwiftUIView(rowLabel: "Crosswind:", rowValue: velocityOptions.convert(source: locator.windDrift, from: .metric, to: velocityOptions).velocityString)
+
+            NavigatorRowSwiftUIView(rowLabel: "Vertical Speed:", rowValue: velocityOptions.convert(source: locator.verticalVelocity, from: .metric, to: velocityOptions, precision: .minutes).velocityString)
         }
     }
     
